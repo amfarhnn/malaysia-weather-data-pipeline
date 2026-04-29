@@ -13,3 +13,19 @@ This project uses Azure Blob Storage as a data lake with partitioned storage:
 ### Data Flow
 
 API -> Python ETL -> Raw Layer (Azure) -> Processed Layer (Azure) -> SQLite
+
+## Docker
+
+This project can be containerized using Docker.
+
+### Build Image
+
+```bash
+docker build -t malaysia-weather-pipeline .
+```
+
+### Run Container
+
+```bash
+docker run --env-file .env malaysia-weather-pipeline
+```
