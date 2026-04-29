@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+venv/
+logs/
+*.pyc
+weather_pipeline.db
