@@ -4,3 +4,4 @@ venv/
 logs/
 *.pyc
 weather_pipeline.db
+.env
