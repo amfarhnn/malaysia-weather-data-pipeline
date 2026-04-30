@@ -1,31 +1,35 @@
-# Malaysia Weather Data Pipeline
+# Malaysia Weather Data Engineering Pipeline
 
-Weather API -> Python -> Raw CSV -> Cleaned CSV -> SQLite Database
+An end-to-end cloud-based data engineering project that extracts real-time weather data from multiple Malaysian cities, transforms the data using Python, stores raw and processed data in Azure Blob Storage, loads structured data into SQLite, and visualizes insights using Power BI.
 
-## Cloud Architecture
+---
 
-This project uses Azure Blob Storage as a data lake with partitioned storage:
+## Project Overview
 
-- Raw data is stored in hierarchical folders by date
-- Processed data is stored in a structured format for analytics
-- Supports scalable data ingestion and retrieval
+This project simulates a real-world data engineering workflow involving API ingestion, ETL processing, cloud data lake storage, database loading, scheduling, containerization, and dashboard reporting.
 
-### Data Flow
+The project was built to demonstrate practical data engineering skills for internship and entry-level data roles.
 
-API -> Python ETL -> Raw Layer (Azure) -> Processed Layer (Azure) -> SQLite
+---
 
-## Docker
+## Architecture
 
-This project can be containerized using Docker.
+```text
+Open-Meteo API
+      ↓
+Python Extract
+      ↓
+Raw CSV
+      ↓
+Azure Blob Storage - Raw Layer
+      ↓
+Python Transform
+      ↓
+Processed CSV
+      ↓
+Azure Blob Storage - Processed Layer
+      ↓
+SQLite Database
+      ↓
+Power BI Dashboard
 
-### Build Image
-
-```bash
-docker build -t malaysia-weather-pipeline .
-```
-
-### Run Container
-
-```bash
-docker run --env-file .env malaysia-weather-pipeline
-```
