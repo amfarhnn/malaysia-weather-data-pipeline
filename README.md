@@ -182,7 +182,7 @@ The Power BI dashboard visualizes:
 - Rain status distribution
 - Weather trend over time
 
-Suggested screenshot: `screenshots/powerbi_dashboard.png`
+![Power BI Dashboard](screenshots/powerbi_dashboard.png)
 
 ## Challenges & Solutions
 
