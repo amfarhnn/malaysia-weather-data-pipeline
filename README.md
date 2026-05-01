@@ -1,224 +1,190 @@
-# Malaysia Weather Data Engineering Pipeline
+# 🌦️ Malaysia Weather Data Engineering Pipeline
 
-An end-to-end cloud-based data engineering project that extracts real-time weather data from multiple Malaysian cities, transforms the data using Python, stores raw and processed data in Azure Blob Storage, loads structured data into SQLite, and visualizes insights using Power BI.
+An end-to-end cloud-based data engineering pipeline that extracts real-time weather data from multiple Malaysian cities, processes it using Python, stores data in a partitioned Azure data lake, loads structured data into PostgreSQL, and visualizes insights using Power BI.
 
----
+## 🚀 Project Overview
 
-## Project Overview
+This project simulates a production-grade data pipeline, covering:
 
-This project simulates a real-world data engineering workflow involving API ingestion, ETL processing, cloud data lake storage, database loading, scheduling, containerization, and dashboard reporting.
+- API data ingestion
+- Data validation (data quality checks)
+- Data transformation
+- Cloud storage (Azure Blob Storage)
+- Incremental database loading
+- Workflow automation
+- Containerization (Docker)
+- Dashboard visualization
 
-The project was built to demonstrate practical data engineering skills for internship and entry-level data roles.
-
----
-
-## Architecture
+## 🧠 Architecture
 
 ```text
 Open-Meteo API
       ↓
-Python Extract
+Extract (Python)
       ↓
-Raw CSV
+Validate (Raw Data)
       ↓
-Azure Blob Storage - Raw Layer
+Azure Blob Storage (Raw Layer)
       ↓
-Python Transform
+Transform (Pandas)
       ↓
-Processed CSV
+Validate (Processed Data)
       ↓
-Azure Blob Storage - Processed Layer
+Azure Blob Storage (Processed Layer)
       ↓
-SQLite Database
+Incremental Load (PostgreSQL)
       ↓
 Power BI Dashboard
 ```
 
-## Tech Stack
+## 🏗️ Tech Stack
 
-- Python
+- Python (ETL)
 - Pandas
 - REST API
-- Azure Blob Storage
-- SQLite
+- Azure Blob Storage (Data Lake)
+- PostgreSQL (Database)
+- SQLAlchemy
 - Docker
 - Python Scheduler
 - Power BI
 - Git & GitHub
 
-## Key Features
+## 🔥 Key Features
 
-- Extracts real-time weather data from multiple Malaysian cities
-- Implements an end-to-end ETL pipeline
-- Stores raw and processed data in Azure Blob Storage
-- Uses partitioned data lake structure by year, month, and day
-- Loads processed data into SQLite database
-- Includes logging for pipeline monitoring
-- Supports automated scheduling
-- Containerized using Docker
-- Provides dashboard visualization using Power BI
+- End-to-end ETL pipeline
+- Cloud-based data lake using Azure Blob Storage
+- Partitioned storage (year/month/day)
+- **Data validation** (null checks, range validation, duplicates)
+- **Incremental loading** (no duplicate inserts)
+- PostgreSQL database integration
+- Automated scheduling
+- Docker containerization
+- Interactive dashboard visualization
 
-## Data Lake Structure
+## 🧪 Data Validation Layer
+
+Ensures data quality before loading:
+- Null value checks
+- Range validation (e.g., humidity 0–100)
+- Duplicate detection
+- Category validation
+
+Example:
+```python
+assert df["temperature_c"].notnull().all()
+assert (df["humidity_percent"] <= 100).all()
+```
+
+## ⚡ Incremental Loading (Production Feature)
+
+Instead of reloading all data:
+- Only new records are inserted based on `extracted_at` timestamp
+
+SQL logic:
+```sql
+SELECT MAX(extracted_at) FROM weather_observations;
+```
+
+Filtering logic:
+```python
+df = df[df["extracted_at"] > last_timestamp]
+```
+
+✅ Prevents duplicates
+✅ Improves efficiency
+✅ Production-ready behavior
+
+## 🗄️ Data Lake Structure
 
 ```
 weather-data/
 │
 ├── raw/
-│   └── year=2026/month=04/day=29/
-│       └── weather_raw_HHMMSS.csv
+│   └── year=2026/month=05/day=01/
 │
 └── processed/
-    └── year=2026/month=04/day=29/
-        └── weather_cleaned_HHMMSS.csv
+    └── year=2026/month=05/day=01/
 ```
 
-## Dataset Fields
-
-| Column | Description |
-|--------|-------------|
-| city | Malaysian city name |
-| latitude | City latitude |
-| longitude | City longitude |
-| temperature_c | Temperature in Celsius |
-| humidity_percent | Relative humidity percentage |
-| precipitation_mm | Precipitation level |
-| wind_speed_kmh | Wind speed |
-| weather_time | Weather observation time |
-| extracted_at | Data extraction timestamp |
-| temperature_category | Hot or Normal classification |
-| rain_status | Rain or No Rain classification |
-
-## Project Structure
+## 🧱 Project Structure
 
 ```
 malaysia-weather-pipeline/
 │
 ├── data/
-│   ├── raw/
-│   └── processed/
-│
 ├── logs/
-│   └── pipeline.log
-│
 ├── src/
-│   ├── config.py
 │   ├── extract.py
 │   ├── transform.py
+│   ├── validate.py
 │   ├── load.py
-│   ├── logger.py
+│   ├── config.py
 │   └── upload_to_azure.py
 │
 ├── main.py
 ├── scheduler.py
-├── check_db.py
 ├── Dockerfile
-├── .dockerignore
-├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
 
-## How to Run Locally
+## ▶️ How to Run
 
-### 1. Create virtual environment
-
-```bash
-python -m venv venv
-```
-
-### 2. Activate virtual environment
-
-```bash
-venv\Scripts\activate
-```
-
-### 3. Install dependencies
-
+### Local Run
 ```bash
 pip install -r requirements.txt
-```
-
-### 4. Create .env file
-
-```
-AZURE_STORAGE_CONNECTION_STRING=your_azure_connection_string
-AZURE_CONTAINER_NAME=weather-data
-```
-
-### 5. Run pipeline
-
-```bash
 python main.py
 ```
 
-## Run with Docker
-
-### Build Docker image
-
+### Docker Run
 ```bash
 docker build -t weather-pipeline .
-```
-
-### Run Docker container
-
-```bash
 docker run --env-file .env weather-pipeline
 ```
 
-## Run Scheduler
-
+### Scheduler
 ```bash
 python scheduler.py
 ```
 
-The scheduler automates pipeline execution and simulates workflow orchestration similar to Apache Airflow.
+## 📊 Dashboard
 
-## Dashboard
-
-The Power BI dashboard visualizes:
-
+The Power BI dashboard includes:
 - Temperature by city
-- Humidity by city
+- Humidity analysis
 - Rain status distribution
-- Weather trend over time
+- Time-based trends
 
+📌 Dashboard screenshot:
 ![Power BI Dashboard](screenshots/powerbi_dashboard.png)
 
-## Challenges & Solutions
+## ⚠️ Challenges & Solutions
 
-During development, Docker setup required troubleshooting due to Windows virtualization and WSL2 configuration issues.
+### Docker setup issues (WSL + virtualization)
+- Fixed by enabling BIOS virtualization and configuring WSL2
+- Debugged Docker backend initialization
+- Ensured stable container execution
 
-**Actions taken:**
+## 🧠 Skills Demonstrated
 
-- Enabled SVM Mode in BIOS
-- Installed and configured WSL2 with Ubuntu
-- Updated WSL kernel
-- Reinstalled Docker Desktop cleanly
-- Verified Docker Engine and container execution
-
-This improved understanding of containerization, virtualization, and local development environments.
-
-## Skills Demonstrated
-
-- Data ingestion
-- ETL pipeline development
-- Cloud storage integration
-- Data lake architecture
-- Data transformation
-- SQL database loading
+- ETL pipeline design
+- Data validation & quality assurance
+- Cloud data lake architecture
+- Incremental data processing
+- SQL & PostgreSQL
 - Workflow automation
 - Docker containerization
-- Dashboard reporting
-- GitHub project documentation
+- Data visualization
 
-## Resume Summary
+## 📄 Resume Summary
 
-Built a Dockerized end-to-end data engineering pipeline using Python, Azure Blob Storage, SQLite, and Power BI. The pipeline extracts real-time weather data from a public API, stores raw and processed datasets in a partitioned cloud data lake, loads structured data into a database, supports automated scheduling, and provides dashboard analytics.
+Built a production-ready data pipeline using Python, Azure Blob Storage, and PostgreSQL, implementing ETL processing, data validation, incremental loading, Docker containerization, and Power BI dashboards for real-time weather analytics.
 
-## Future Improvements
+## 🔮 Future Improvements
 
-- Replace SQLite with PostgreSQL or Azure SQL Database
-- Add Apache Airflow for orchestration
-- Add automated data quality checks
-- Deploy pipeline to Azure Container Apps
-- Add CI/CD using GitHub Actions
+- Replace scheduler with Apache Airflow
+- Use Parquet instead of CSV
+- Add CI/CD pipeline (GitHub Actions)
+- Deploy to cloud (Azure Container Apps)
+- Add real-time streaming pipeline
