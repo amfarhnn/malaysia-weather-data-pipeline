@@ -2,6 +2,3 @@ requests
 pandas
 azure-storage-blob
 python-dotenv
-schedule
-psycopg2-binary
-sqlalchemy
