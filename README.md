@@ -1,6 +1,6 @@
 # Malaysia Weather Data Engineering Pipeline
 
-An end-to-end cloud-based data engineering project that extracts real-time weather data from multiple Malaysian cities, transforms the data using Python, stores raw and processed data in Azure Blob Storage, loads structured data into SQLite, and visualizes insights using Power BI.
+An end-to-end cloud-based data engineering project that extracts real-time weather data from multiple Malaysian cities, transforms the data using Python, stores raw and processed data in Azure Blob Storage, loads structured data into PostgreSQL, and visualizes insights using Power BI.
 
 ---
 
@@ -29,7 +29,7 @@ Processed CSV
       ↓
 Azure Blob Storage - Processed Layer
       ↓
-SQLite Database
+PostgreSQL Database
       ↓
 Power BI Dashboard
 ```
@@ -40,7 +40,7 @@ Power BI Dashboard
 - Pandas
 - REST API
 - Azure Blob Storage
-- SQLite
+- PostgreSQL
 - Docker
 - Python Scheduler
 - Power BI
@@ -143,6 +143,11 @@ pip install -r requirements.txt
 ```
 AZURE_STORAGE_CONNECTION_STRING=your_azure_connection_string
 AZURE_CONTAINER_NAME=weather-data
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=weather_db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
 ```
 
 ### 5. Run pipeline
@@ -150,6 +155,18 @@ AZURE_CONTAINER_NAME=weather-data
 ```bash
 python main.py
 ```
+
+## CI/CD
+
+This project uses GitHub Actions for continuous integration.
+
+The CI workflow automatically:
+- checks out the repository
+- installs Python dependencies
+- checks Python syntax
+- verifies module imports
+
+This helps ensure the project remains stable after code changes.
 
 ## Run with Docker
 
@@ -213,11 +230,10 @@ This improved understanding of containerization, virtualization, and local devel
 
 ## Resume Summary
 
-Built a Dockerized end-to-end data engineering pipeline using Python, Azure Blob Storage, SQLite, and Power BI. The pipeline extracts real-time weather data from a public API, stores raw and processed datasets in a partitioned cloud data lake, loads structured data into a database, supports automated scheduling, and provides dashboard analytics.
+Built a Dockerized end-to-end data engineering pipeline using Python, Azure Blob Storage, PostgreSQL, and Power BI. The pipeline extracts real-time weather data from a public API, stores raw and processed datasets in a partitioned cloud data lake, loads structured data into a database, supports automated scheduling, and provides dashboard analytics.
 
 ## Future Improvements
 
-- Replace SQLite with PostgreSQL or Azure SQL Database
 - Add Apache Airflow for orchestration
 - Add automated data quality checks
 - Deploy pipeline to Azure Container Apps
