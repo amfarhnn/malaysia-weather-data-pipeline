@@ -5,3 +5,5 @@ python-dotenv
 schedule
 psycopg2-binary
 sqlalchemy
+fastapi
+uvicorn[standard]
