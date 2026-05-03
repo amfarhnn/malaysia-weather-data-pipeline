@@ -10,12 +10,22 @@ class Config:
 
     RAW_DATA_PATH = "data/raw/weather_raw.csv"
     PROCESSED_DATA_PATH = "data/processed/weather_cleaned.csv"
+    # Helper to treat missing or literal 'None' values as absent
+    @staticmethod
+    def _env(name, default=None):
+        v = os.getenv(name)
+        if v is None:
+            return default
+        s = str(v).strip()
+        if s == "" or s.lower() == "none":
+            return default
+        return s
 
-    POSTGRES_HOST = os.getenv("POSTGRES_HOST")
-    POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-    POSTGRES_DB = os.getenv("POSTGRES_DB")
-    POSTGRES_USER = os.getenv("POSTGRES_USER")
-    POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+    POSTGRES_HOST = _env("POSTGRES_HOST") or "localhost"
+    POSTGRES_PORT = _env("POSTGRES_PORT") or "5432"
+    POSTGRES_DB = _env("POSTGRES_DB") or "weather_db"
+    POSTGRES_USER = _env("POSTGRES_USER") or "postgres"
+    POSTGRES_PASSWORD = _env("POSTGRES_PASSWORD") or "postgres"
 
     POSTGRES_URL = (
         f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}"
