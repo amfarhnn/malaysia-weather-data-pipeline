@@ -92,11 +92,11 @@ Malaysia Weather Data Engineering Platform
 
 An end-to-end, production-style data engineering project that ingests real-time weather data from public APIs, processes it through a scalable ETL pipeline, stores it in a cloud-based data lake and relational database, and exposes the data via API and dashboard for analytics.
 
-🚀 Project Overview
+Project Overview
 -------------------
 This project simulates a real-world data engineering system, combining batch processing, cloud storage, workflow orchestration, containerization, and data serving into a unified platform. The system is designed to demonstrate practical, industry-relevant data engineering skills suitable for internship and junior data engineering roles.
 
-🧱 Architecture
+Architecture
 ---------------
 Open-Meteo API
       ↓
@@ -118,7 +118,7 @@ FastAPI Data Service
       ↓
 Power BI Dashboard
 
-🔧 Tech Stack
+Tech Stack
 ------------
 - Python (ETL processing)
 - Pandas (data transformation)
@@ -131,7 +131,7 @@ Power BI Dashboard
 - GitHub Actions (CI/CD)
 - Power BI (data visualization)
 
-⭐ Key Features
+Key Features
 -------------
 - End-to-end ETL pipeline (Extract, Transform, Load)
 - Cloud-based data lake using Azure Blob Storage
@@ -145,21 +145,21 @@ Power BI Dashboard
 - CI/CD pipeline using GitHub Actions
 - Interactive dashboard using Power BI
 
-☁️ Data Lake Design
--------------------
+### Data Lake Design
+
+```text
 weather-data/
-│
 ├── raw/
 │   └── year=YYYY/month=MM/day=DD/
 │       └── weather_raw_timestamp.csv
-│
 └── processed/
-    └── year=YYYY/month=MM/day=DD/
-        └── weather_cleaned_timestamp.csv
+      └── year=YYYY/month=MM/day=DD/
+            └── weather_cleaned_timestamp.csv
+```
 
 This partitioning improves scalability, performance, and data retrieval efficiency.
 
-📡 API Endpoints (FastAPI)
+API Endpoints (FastAPI)
 -------------------------
 Endpoint  | Description
 --------- | -------------------------------
@@ -171,7 +171,7 @@ Endpoint  | Description
 Interactive API docs:
 http://127.0.0.1:8000/docs
 
-🔄 Workflow Orchestration
+Workflow Orchestration
 ------------------------
 Apache Airflow is used to manage and schedule the pipeline:
 
@@ -179,7 +179,7 @@ Apache Airflow is used to manage and schedule the pipeline:
 - Task monitoring via UI
 - Scalable workflow automation
 
-🐳 Docker Support
+Docker Support
 -----------------
 Build:
 
@@ -193,7 +193,7 @@ Run:
 docker run --env-file .env weather-pipeline
 ```
 
-⚙️ CI/CD (GitHub Actions)
+CI/CD (GitHub Actions)
 -------------------------
 Automated workflow includes:
 
@@ -203,7 +203,7 @@ Automated workflow includes:
 
 Ensures code quality and pipeline stability on every push.
 
-📊 Dashboard (Power BI)
+Dashboard (Power BI)
 ----------------------
 The dashboard provides:
 
@@ -212,7 +212,7 @@ The dashboard provides:
 - Rain distribution
 - Time-based trends
 
-⚠️ Challenges & Solutions
+Challenges & Solutions
 ------------------------
 Docker setup issues due to WSL and virtualization
 
@@ -226,7 +226,7 @@ Data duplication issue
 
  → Solved using incremental loading logic
 
-🧠 Skills Demonstrated
+Skills Demonstrated
 ---------------------
 - Data ingestion from APIs
 - ETL pipeline development
@@ -240,31 +240,3 @@ Data duplication issue
 - CI/CD practices
 - Data visualization
 
-📝 Resume Summary
------------------
-Built a production-ready data engineering platform using Python, Azure Blob Storage, PostgreSQL, Docker, Apache Airflow, and FastAPI. Implemented ETL pipelines with data validation, incremental loading, CI/CD automation, and exposed processed data through REST APIs and dashboards.
-
-🚀 Future Improvements
---------------------
-- Replace PostgreSQL with cloud-native database (Azure SQL / BigQuery)
-- Implement streaming pipeline (Kafka)
-- Add data quality framework (Great Expectations)
-- Deploy API and pipeline to cloud (Azure Container Apps)
-- Add monitoring and alerting system
-
-🔥 What You Just Did
---------------------
-This README now:
-
-- ✅ passes recruiter scan
-- ✅ shows system thinking
-- ✅ highlights industry tools
-- ✅ tells a clear story
-
-🎯 Final Advice
---------------
-Don’t touch Project 1 anymore. You’ve reached maximum ROI.
-
-🚀 Next
------
-Say: “start project 2” — now we go into streaming (Kafka / real-time) — this is the final piece to make your profile elite.
