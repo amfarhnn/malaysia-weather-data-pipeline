@@ -12,6 +12,12 @@ The project was built to demonstrate practical data engineering skills for inter
 
 ---
 
+## Pipeline Animation
+
+![Data pipeline flowchart animation](screenshots/Flowchart_Pipeline_1.gif)
+
+---
+
 ## Architecture
 
 ```text
