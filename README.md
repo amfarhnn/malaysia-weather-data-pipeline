@@ -1,3 +1,5 @@
+![Data pipeline flowchart animation](screenshots/header.jpeg)
+
 # Malaysia Weather Data Engineering Pipeline
 
 An end-to-end cloud-based data engineering project that extracts real-time weather data from multiple Malaysian cities, transforms the data using Python, stores raw and processed data in Azure Blob Storage, loads structured data into PostgreSQL, and visualizes insights using Power BI.
