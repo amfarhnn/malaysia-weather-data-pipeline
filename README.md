@@ -1,4 +1,4 @@
-![Data pipeline flowchart animation](screenshots/header.jpeg)
+![Header](screenshots/header.jpg)
 
 # Malaysia Weather Data Engineering Pipeline
 
