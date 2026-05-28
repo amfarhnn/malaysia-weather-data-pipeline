@@ -1,0 +1,66 @@
+-- Power BI measures for the Malaysia Weather Data Engineering Pipeline.
+-- Create these measures on the weather_observations table.
+
+Avg Temperature (C) =
+ROUND(AVERAGE(weather_observations[temperature_c]), 1)
+
+Max Temperature (C) =
+ROUND(MAX(weather_observations[temperature_c]), 1)
+
+Min Temperature (C) =
+ROUND(MIN(weather_observations[temperature_c]), 1)
+
+Avg Humidity (%) =
+ROUND(AVERAGE(weather_observations[humidity_percent]), 0)
+
+Avg Precipitation (mm) =
+ROUND(AVERAGE(weather_observations[precipitation_mm]), 2)
+
+Max Wind Speed (km/h) =
+ROUND(MAX(weather_observations[wind_speed_kmh]), 1)
+
+Cities Monitored =
+DISTINCTCOUNT(weather_observations[city])
+
+Records Loaded =
+COUNTROWS(weather_observations)
+
+Rain Observations =
+CALCULATE(
+    COUNTROWS(weather_observations),
+    weather_observations[rain_status] = "Rain"
+)
+
+Rain Observation Rate (%) =
+DIVIDE([Rain Observations], [Records Loaded], 0)
+
+Latest Weather Time =
+MAX(weather_observations[weather_time])
+
+Latest Pipeline Refresh =
+MAX(weather_observations[extracted_at])
+
+Latest Avg Temperature (C) =
+VAR LatestTime = [Latest Weather Time]
+RETURN
+    CALCULATE(
+        [Avg Temperature (C)],
+        weather_observations[weather_time] = LatestTime
+    )
+
+Latest Avg Humidity (%) =
+VAR LatestTime = [Latest Weather Time]
+RETURN
+    CALCULATE(
+        [Avg Humidity (%)],
+        weather_observations[weather_time] = LatestTime
+    )
+
+Latest Rainy Cities =
+VAR LatestTime = [Latest Weather Time]
+RETURN
+    CALCULATE(
+        DISTINCTCOUNT(weather_observations[city]),
+        weather_observations[weather_time] = LatestTime,
+        weather_observations[rain_status] = "Rain"
+    )

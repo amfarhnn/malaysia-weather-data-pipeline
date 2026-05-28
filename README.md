@@ -213,3 +213,7 @@ The dashboard provides:
 - Humidity analysis
 - Rain distribution
 - Time-based trends
+
+![Power BI Dashboard](screenshots/powerbi_dashboard.png)
+
+Power BI build notes, visual layout, and DAX measures are available in `powerbi/dashboard_build_guide.md`.

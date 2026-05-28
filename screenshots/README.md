@@ -1,7 +1,9 @@
 # Power BI Dashboard Screenshots
 
-Add your Power BI dashboard screenshots here.
+Store the final exported Power BI dashboard image here:
 
-Example: `powerbi_dashboard.png`
+```text
+powerbi_dashboard.png
+```
 
-This folder documents the visualization layer of the data engineering pipeline.
+The main README references this file directly, so replace it after exporting the polished dashboard from Power BI Desktop.
