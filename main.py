@@ -2,6 +2,7 @@ from datetime import datetime
 
 from src.extract import extract_weather_data
 from src.transform import transform_weather_data
+from src.validate import validate_weather_data
 from src.load import load_weather_data
 from src.logger import setup_logger
 from src.upload_to_azure import upload_file_to_azure
@@ -30,8 +31,11 @@ def run_pipeline():
         )
         logger.info("Raw data uploaded to Azure Blob Storage")
 
-        transform_weather_data()
+        processed_df = transform_weather_data()
         logger.info("Data transformation completed")
+
+        validate_weather_data(processed_df)
+        logger.info("Data validation completed")
 
         upload_file_to_azure(
             Config.PROCESSED_DATA_PATH,
